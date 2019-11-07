@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 @Service
@@ -38,8 +37,10 @@ public class CourseService {
         ResponseEntity<List<Course>> responseEntity = restTemplate.exchange(baseUrl + "/programName/" + programName,
                 HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<Course>>() {});
-
-        return responseEntity.getBody();
+        List<Course> courseList = responseEntity.getBody();
+        assert courseList != null;
+        courseList.forEach(System.out::println);
+        return courseList;
     }
 
     public List<Course> findBycourseTitle(String conursetitle){

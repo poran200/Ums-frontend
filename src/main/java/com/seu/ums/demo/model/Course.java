@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"code"})
@@ -42,19 +42,6 @@ public class Course implements Serializable {
 
     }
 
-    //    @Transactional
-//    public void addSection(Section section) {
-//        if (sectionList == null)
-//            sectionList = new ArrayList<>();
-//            section.setCourse(new Course(code,title));
-//        sectionList.add(section);
-//    }
-//    public void addSection(Scetion scetion) {
-//        if (scetionList == null)
-//            scetionList = new ArrayList<>();
-//        scetion.setCourseCode(code);
-//        scetion.setCourseTitle(title);
-//        scetionList.add(scetion);
-//    }
+
 
 }

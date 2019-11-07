@@ -75,9 +75,10 @@ public class StudentView extends AppLayout {
                 header.getUI().ifPresent(ui -> ui.navigate(""));
             }
         });
-
-
+       long studentId = Long.parseLong(loginToken.getUserId());
+       programName= studentService.findbyid((studentId)).getProgram();
        scetionList= sectionService.findByProgram(programName);
+
         sectionGrid.setItems(scetionList);
         setSectionGrid();
         userId = loginToken.getUserId();
@@ -107,7 +108,7 @@ public class StudentView extends AppLayout {
     }
     private  String userId;
     private  String userName;
-    private String  programName= "Bsc in CSE";
+    private String  programName;
     private List<Scetion> scetionList;
 
     private  Tab user() {

@@ -34,6 +34,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -93,10 +94,22 @@ public class CoordinatorView extends AppLayout {
         addToNavbar(header);
 
         LoginToken loginToken = header.getLoginToken();
-        Employee employee = employeeService.getEmployeeById(loginToken.getUserId());
+        Employee employee = new Employee();
+
+        try {
+            employeeService.getEmployeeById(loginToken.getUserId());
+
+        }catch (HttpClientErrorException e){
+            httpSession.removeAttribute("user");
+            header.getUI().ifPresent(ui -> ui.navigate(""));
+
+        }
         String programName = employee.getProgram();
-        courseGrid.setItems(courseService.findByProgram(programName));
-        createSectionDialog();
+        List<Course> courseList= courseService.findByProgram("BSc in CSE");
+         courseList.forEach(System.out::println);
+         courseGrid.setItems(courseList);
+        setCourseGrid();
+        //createSectionDialog();
         sectionGridWorkSpace.setItems(sectionService.findByFaculty(loginToken.getUserId()));
         setSectionGridWorkSpace();
 
@@ -158,7 +171,7 @@ public class CoordinatorView extends AppLayout {
         VerticalLayout  dashboardLayout = new VerticalLayout();
         H2 h2 = new H2("Courses Offered by ");
          dashboardLayout.add(h2);
-        setCourseGrid();
+       // setCourseGrid();
         createSectionDialog();
 //        setSectionGrid();
          dashboardLayout.add(courseGrid);
